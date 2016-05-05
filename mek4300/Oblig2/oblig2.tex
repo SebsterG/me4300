@@ -58,8 +58,31 @@ The last plot is of $\nu_t$ over our domain which at the end of the plot is whic
 
 
 \section*{iv}
+\subsection*{RANS}
+To get the RANS equations we start with the Navier-Stokes equations and split up the velocity into a mean and fluctuating part $ u = \bar{u} + u^{'} $
+N-S:
+\begin{equation}
+ \frac{\partial u_i}{\partial t} + u_j \frac{\partial u_i}{\partial x_j} = - \frac{1}{\rho} \frac{\partial p}{\partial x_i} + \nu \frac{\partial^2 u_i}{\partial x_j^2}    
+\end{equation}
+If we then take the mean of every term we get:
+\begin{align*}
+\overline{\frac{\partial u_i}{\partial t}} &= \frac{\partial \overline{u_i}}{\partial t}\\
+\overline{\frac{1}{\rho} \frac{\partial p}{\partial x_i}} &= \frac{1}{\rho} \frac{\partial \bar{p}}{\partial x_i} \\
+\overline{\nu \frac{\partial^2 u_i}{\partial x_j^2}} &= \nu \frac{\partial^2 \bar{u_i}}{\partial x_j^2}  \\
+u_j \frac{\partial u_i}{\partial x_j} &= \frac{\partial u_iu_j}{\partial x_j} - u_i \frac{\partial u_j}{\partial x_j}\\
+& \text{where this last term is zero because of incompressibility}\\
+\overline{u_i u_j} & = \overline{u_i u_j} + \overline {u_i^{'}u_j^{'}} \\
+\text{since  } \bar{u} &= \overline{\bar{u}+u^{'}} = \bar{u}\\
+\overline{u_j \frac{\partial u_i}{\partial x_j}} =& \frac{\partial (\overline{u_iu_j} + u_i^{'}u_j^{'})}{\partial x_j} = \bar{u_j} \frac{\partial \bar{u_i}}{\partial x_j} + \frac{\partial u_i^{'} u_j^{'}}{\partial x_j}
+\end{align*}
+Putting all this together we get:
+\begin{equation}
+\frac{\partial \overline{u_i}}{\partial t} +\bar{u_j} \frac{\partial \bar{u_i}}{\partial x_j}  =- \frac{1}{\rho} \frac{\partial \bar{p}}{\partial x_i}+  \nu \frac{\partial^2 \bar{u_i}}{\partial x_j^2} + \frac{\partial u_i^{'} u_j^{'}}{\partial x_j}
+\end{equation}
+$$ \frac{\partial \bar{u_i}}{\partial x_i} = 0 $$
+
 \subsection*{Reynolds Stress Equation}
-We start by taking NS minus RANS giving, term by term:
+We start by taking NS minus RANS (1)-(2) giving, term by term:
 \begin{align*}
 \frac{\partial u_i}{\partial t} - \frac{\partial \bar{u_i}}{\partial t} &= \frac{\partial u^{'}_i}{\partial t}\\
 u_j \frac{\partial u_i}{\partial x_j} &= \frac{\partial u_iu_j}{\partial x_j} \\
@@ -113,6 +136,31 @@ Putting all these together and taking the average of everything, we get what we 
  + \overline{\frac{1}{\rho}\big( \frac{\partial u^{'}_i}{\partial x_k} + \frac{\partial u^{'}_k}{\partial x_i} \big)} - \frac{\partial }{\partial x_k} \big[ \overline{u_i^{'} u_j^{'} u_k^{'}} -  \nu\overline{ \frac{\partial u^{'}_i u^{'}_k}{\partial x_j}} + 
      \overline{\frac{p^{'}}{\rho} ( \delta_{ij} u_k + \delta_{kj}u_i  )} \big]  
 \end{equation}
+\newline
+\newline
+
+\subsection{Kinetic-Energy Equation}
+To get the Turbulence Kinetic-Energy equation. We start like before with NS - RANS, and times this equation with $u_i^{'}$.
+We use the product rule like before and get term by term:
+\begin{align*}
+u_i^{'}\frac{\partial u_i^{'}}{\partial t} &= \frac{1}{2}\frac{\partial u_i^{'}u_i^{'}}{\partial t} \\
+u_i^{'}u_j^{'} \frac{\partial u_i^{'}}{\partial x_j} &= \frac{1}{2}u_j^{'}\frac{\partial u_i^{'}u_i^{'}}{\partial x_j}
+\end{align*}
+We will call  $ K = \frac{1}{2}\overline{u_i^{'}u_i^{'}}$ 
+These to together, and taking the mean, gives us the LHS:
+$$ \frac{DK}{Dt}   $$
+We already have the term:
+$$  \overline{u_i^{'}u_j^{'}}\frac{\partial \bar{u_j}}{\partial x_j} $$ 
+and 
+$$ u_i^{'}\frac{\partial p^{'}}{\partial x_i} $$
+To get the same as white we rewrite the second last term
+$$\nu \frac{\partial }{\partial x_j} (u_i \frac{\partial u_i^{'}}{\partial x_j}) = \nu\frac{\partial u_i}{\partial x_j}\frac{\partial u_i}{\partial x_j} +\nu  u_i \frac{\partial^2 u_i}{\partial x_j^2}       $$
+$$\nu \frac{\partial }{\partial x_j} (u_i \frac{\partial u_j^{'}}{\partial x_i}) =\nu \frac{\partial u_i}{\partial x_j}\frac{\partial u_j}{\partial x_i} + \nu u_i \frac{\partial u_j}{\partial x_i \partial x_j}       $$
+we have from NS-RANS
+$$\nu  u_i \frac{\partial^2 u_i}{\partial x_j^2}  $$
+$$ \nu  u_i \frac{\partial^2 u_i}{\partial x_j^2} = \nu \frac{\partial u_i}{\partial x_j}\frac{\partial u_j}{\partial x_i} + \nu u_i \frac{\partial u_j}{\partial x_i \partial x_j}  +$$
+$$  \nu\frac{\partial u_i}{\partial x_j}\frac{\partial u_i}{\partial x_j} - \nu \frac{\partial u_i}{\partial x_j}\frac{\partial u_j}{\partial x_i} - \nu u_i \frac{\partial u_j}{\partial x_i \partial x_j} $$
+
 
 
 
