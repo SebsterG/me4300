@@ -5,6 +5,7 @@ set_log_active(False)
 mesh = Mesh("von_karman_street.xml")
 V = VectorFunctionSpace(mesh,"CG", 2)
 Q = FunctionSpace(mesh,"CG", 1)
+print "Dofs: ", V.dim() + Q.dim()
 #VQ = V * Q # The Mixed space , alternative writing :
 #VQ = M i x e d F u n c t i o n S p a c e ([V , Q])
 #u , p = TrialFunctions(VQ)
